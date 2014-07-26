@@ -16,6 +16,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -53,7 +54,7 @@ public class ParseJSON extends Activity {
     public String readTwitterFeed() {
         StringBuilder builder = new StringBuilder();
         HttpClient client = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet("http://twitter.com/statuses/user_timeline/vogella.json");
+        HttpGet httpGet = new HttpGet("http://twitter.com/1.1/statuses/user_timeline.json?screen_name=twitterapi");
         try {
             HttpResponse response = client.execute(httpGet);
             StatusLine statusLine = response.getStatusLine();
@@ -75,6 +76,19 @@ public class ParseJSON extends Activity {
             e.printStackTrace();
         }
         return builder.toString();
+    }
+
+    public void writeJSON() {
+        JSONObject object = new JSONObject();
+        try{
+            object.put("name", "John Doe");
+            object.put("score", new Integer(200));
+            object.put("current", new Double(152.32));
+            object.put("nickname", "Hacker");
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+        System.out.println(object);
     }
 
     @Override
